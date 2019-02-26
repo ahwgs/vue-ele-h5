@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer v-if="show" class="footer">
     <div class="index-footer">
       <router-link exact class="footer-item" v-for="(item,index) in menuList" :to="item.path">
         <i class="iconfont" :class="item.icon"></i>
@@ -12,6 +12,12 @@
 <script>
   export default {
     name: "BNavBar",
+    props: {
+      show: {
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
       return {
         menuList: [

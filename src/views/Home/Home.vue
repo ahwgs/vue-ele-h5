@@ -31,6 +31,9 @@
     components: {
       "van-icon": Icon,
       "home-header": HomeHeader
+    },
+    created(){
+      
     }
   }
 </script>

@@ -43,11 +43,20 @@ export const routes = [
     component: _import_('My/My'),
   },
   {
+    path: '/search',
+    name: '搜索',
+    meta: {
+      navBar: true
+    },
+    component: _import_('Search/Search'),
+  },
+  {
     path: '/my/address',
     name: '我的地址',
     component: _import_('My/Address'),
     meta: {
-      uth: true
+      auth: true,
+      navBar: true
     }
   }
 ]
@@ -63,6 +72,12 @@ router.beforeEach((to, from, next) => {
   if (to.name) {
     document.title = to.name
   }
+
+  //改变底部导航
+  if (to.meta.navBar)
+    store.state.app.showNavBar = false
+  else
+    store.state.app.showNavBar = true
 
   NProgress.start()
 
