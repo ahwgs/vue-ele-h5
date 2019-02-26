@@ -5,7 +5,7 @@ import router from './router/index'
 import store from './store/index'
 import './registerServiceWorker'
 import 'lib-flexible'
-
+import './assets/font/iconfont.css'
 
 import FastClick from 'fastclick'
 FastClick.attach(document.body)

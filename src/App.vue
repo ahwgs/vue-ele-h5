@@ -1,11 +1,17 @@
 <template>
   <div id="app">
     <router-view/>
+    <i-nav-bar></i-nav-bar>
   </div>
 </template>
 <script>
+  import BNavBar from './components/BNavBar/index'
 
-
+  export default {
+    components: {
+      "i-nav-bar": BNavBar
+    }
+  }
 </script>
 <style lang="less">
   @import "assets/less/base";
@@ -17,18 +23,5 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-  }
-
-  #nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
-    }
   }
 </style>

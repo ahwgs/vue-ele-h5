@@ -21,15 +21,9 @@ export const routes = [
     path: '/',
     name: '首页',
     component: _import_('Home/Home'),
-    redirect: '/home'
   },
   {
-    path: '/home',
-    name: '首页',
-    component: _import_('Home/Home'),
-  },
-  {
-    path: '/login',
+    path: 'login',
     name: '登录',
     component: _import_('Login/Login'),
   },
@@ -53,7 +47,11 @@ export const routes = [
   }
 ]
 
-const router = new Router({ routes })
+const router = new Router({
+  linkActiveClass:'active',
+  mode:'history',
+  routes
+})
 
 router.beforeEach((to, from, next) => {
 
