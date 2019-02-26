@@ -45,6 +45,7 @@
   @import "../../assets/less/config";
 
   .footer {
+    height: 12vh;
     .index-footer {
       position: fixed;
       left: 0;

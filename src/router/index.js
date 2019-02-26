@@ -23,7 +23,7 @@ export const routes = [
     component: _import_('Home/Home'),
   },
   {
-    path: 'login',
+    path: '/login',
     name: '登录',
     component: _import_('Login/Login'),
   },
@@ -35,21 +35,26 @@ export const routes = [
   {
     path: '/order',
     name: '订单',
-    meta: {
-      auth: true
-    },
     component: _import_('Order/Order'),
   },
   {
     path: '/my',
     name: '我的',
     component: _import_('My/My'),
+  },
+  {
+    path: '/my/address',
+    name: '我的地址',
+    component: _import_('My/Address'),
+    meta: {
+      uth: true
+    }
   }
 ]
 
 const router = new Router({
-  linkActiveClass:'active',
-  mode:'history',
+  linkActiveClass: 'active',
+  mode: 'history',
   routes
 })
 
@@ -65,7 +70,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.user.isLogin) { // 是否已经登陆
       next()
     } else {
-      next({ path: '/login' })
+      next({path: '/login'})
       NProgress.done()
     }
   } else {
