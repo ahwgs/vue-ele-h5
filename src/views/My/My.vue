@@ -1,7 +1,7 @@
 <template>
   <div class="my-page">
 
-
+    <!-- 个人资料 -->
     <div class="profile">
       <div class="profile-head">
         <img :src="head" alt="头像">
@@ -20,10 +20,16 @@
       </div>
     </div>
 
-    <div>
-
-      
-
+    <!-- 个人资料页卡片 -->
+    <div class="card">
+      <div class="card-item">
+        <span><i></i></span>
+        <span>红包</span>
+      </div>
+      <div class="card-item">
+        <span><i></i></span>
+        <span>金币</span>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +56,8 @@
     },
     methods: {
       toLogin: function () {
-        this.$router.push('/login')
+        let localUrl = encodeURIComponent(window.location.href)
+        this.$router.push(`/login?redirect=${localUrl}`)
       }
     }
 
@@ -106,6 +113,17 @@
           height: 60px;
           border-radius: 100%;
         }
+      }
+    }
+
+    .card {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+      background-color: #fff;
+      height: 82px;
+      .card-item{
+
       }
     }
   }
