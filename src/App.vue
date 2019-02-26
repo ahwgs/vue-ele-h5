@@ -6,7 +6,6 @@
 </template>
 <script>
   import BNavBar from './components/BNavBar/index'
-
   export default {
     components: {
       "i-nav-bar": BNavBar
