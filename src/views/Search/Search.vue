@@ -14,10 +14,12 @@
         <div slot="action" @click="onSearch">搜索</div>
       </van-search>
     </div>
-    <section>
-      <header class="label">历史搜索</header>
-      <section>
-        <div></div>
+    <section v-if="showHistory">
+      <header class="label">历史搜索
+        <van-icon @click="hideHistory" name="failure"/>
+      </header>
+      <section class="value">
+        <div @click="onHotSearch(item)" class="item" v-for="(item,index) in historyList" :key="index">{{item}}</div>
       </section>
     </section>
     <section style="margin-top: 15px">
@@ -41,18 +43,23 @@
     data() {
       return {
         searchWord: '',
-        hotSearchList: ['好吃的', '不好吃的']
+        hotSearchList: ['好吃的', '不好吃的'],
+        historyList: ['1111', '2222', '3333'],
+        showHistory: true
       }
     },
     methods: {
       onSearch: function () {
 
       },
-      onHotSearch:function (item) {
+      hideHistory: function () {
+        this.showHistory = false
+      },
+      onHotSearch: function (item) {
         this.searchWord = item;
         this.getSearch(item)
       },
-      getSearch:function (key) {
+      getSearch: function (key) {
 
       }
     }
@@ -63,9 +70,11 @@
   .search-page {
     min-height: 100vh;
     background-color: #fff;
+
     .search {
       display: flex;
     }
+
     .search-back {
       background-color: #fff;
       font-size: 24px;
@@ -74,23 +83,27 @@
       justify-content: center;
       padding-left: 4px;
     }
+
     .search-input {
       display: flex;
       flex: 1;
     }
+
     .label {
       display: flex;
       justify-content: space-between;
       font-size: 18px;
-      padding: 8px 0 8px 14px;
+      padding: 8px 14px 8px 14px;
       color: #666;
       font-weight: 700;
     }
+
     .value {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     }
+
     .item {
       border-radius: 4px;
       color: #666;
