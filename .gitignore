@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 /dist
+/ele-h5-build
+/ele-h5-build.zip
+/ele-h5-build.rar
 
 # local env files
 .env.local
