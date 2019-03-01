@@ -61,14 +61,6 @@ export const routes = [
       auth: true,
       navBar: true
     }
-  },
-  {
-    path: '/about',
-    name: '关于',
-    component: _import_('My/Address'),
-    meta: {
-      navBar: true
-    }
   }
 ]
 
@@ -113,7 +105,4 @@ router.afterEach((to, from) => {
 })
 
 export default router
-
-
-
 
