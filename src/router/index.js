@@ -25,9 +25,6 @@ export const routes = [
   {
     path: '/login',
     name: '登录',
-    meta: {
-      navBar: true
-    },
     component: _import_('Login/Login'),
     meta: {
       hideNavBar: true
