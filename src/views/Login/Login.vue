@@ -1,6 +1,7 @@
 <template>
     <div>
-      登录
+      <input/>
+      <input/>
     </div>
 </template>
 

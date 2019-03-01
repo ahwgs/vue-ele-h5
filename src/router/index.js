@@ -26,6 +26,9 @@ export const routes = [
     path: '/login',
     name: '登录',
     component: _import_('Login/Login'),
+    meta: {
+      hideNavBar: true
+    },
   },
   {
     path: '/find',
@@ -46,7 +49,7 @@ export const routes = [
     path: '/search',
     name: '搜索',
     meta: {
-      navBar: true
+      hideNavBar: true
     },
     component: _import_('Search/Search'),
   },
@@ -56,7 +59,7 @@ export const routes = [
     component: _import_('My/Address'),
     meta: {
       auth: true,
-      navBar: true
+      hideNavBar: true
     }
   }
 ]
@@ -74,7 +77,7 @@ router.beforeEach((to, from, next) => {
   }
 
   //改变底部导航
-  if (to.meta.navBar)
+  if (to.meta.hideNavBar)
     store.state.app.showNavBar = false
   else
     store.state.app.showNavBar = true
