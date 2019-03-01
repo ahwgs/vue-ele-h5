@@ -9,7 +9,9 @@ import './assets/font/iconfont.css'
 
 import axios from './utils/http'
 
+
 Vue.prototype.$http = axios
+
 
 import FastClick from 'fastclick'
 

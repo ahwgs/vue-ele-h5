@@ -3,7 +3,7 @@
     <div class="skeleton-nav"></div>
     <div class="skeleton-swiper"></div>
     <ul class="skeleton-tabs">
-      <li v-for="i in 8" class="skeleton-tabs-item"><span></span></li>
+      <li v-for="i in 10" class="skeleton-tabs-item"><span></span></li>
     </ul>
     <div class="skeleton-banner"></div>
     <div v-for="i in 6" class="skeleton-productions"></div>
@@ -37,16 +37,16 @@
     flex-wrap: wrap;
   }
   .skeleton-tabs-item {
-    width: 25%;
-    height: 55px;
+    width: 20%;
+    height: 100px;
     box-sizing: border-box;
     text-align: center;
     margin-bottom: 15px;
   }
   .skeleton-tabs-item span {
     display: inline-block;
-    width: 55px;
-    height: 55px;
+    width: 100px;
+    height: 100px;
     border-radius: 55px;
     background: #eee;
   }

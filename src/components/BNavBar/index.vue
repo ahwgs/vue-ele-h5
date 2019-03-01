@@ -51,7 +51,7 @@
   @import "../../assets/less/config";
 
   .footer {
-    height: 12vh;
+    height: 10vh;
     .index-footer {
       position: fixed;
       left: 0;
@@ -61,8 +61,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: .12rem;
-      padding-top: 1.2vw;
       background-color: #fff;
       height: 50px;
       -webkit-box-shadow: 0 -0.026667rem 0.053333rem rgba(0, 0, 0, .1);
@@ -75,7 +73,6 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-
       .iconfont {
         font-size: 20px;
         margin-bottom: 2px;
