@@ -7,7 +7,7 @@
         <img :src="head" alt="头像">
       </div>
       <div class="profile-info">
-        <div v-if="isLogin" class="toLogin" @click="toLogin">
+        <div v-if="!isLogin" class="toLogin" @click="toLogin">
           <span class="login">登录/注册</span>
           <span class="loginTips"><i class="iconfont icon-shoujihao"></i>登录后享更多特权</span>
         </div>
