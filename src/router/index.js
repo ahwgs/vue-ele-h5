@@ -25,6 +25,9 @@ export const routes = [
   {
     path: '/login',
     name: '登录',
+    meta: {
+      navBar: true
+    },
     component: _import_('Login/Login'),
   },
   {
@@ -56,6 +59,14 @@ export const routes = [
     component: _import_('My/Address'),
     meta: {
       auth: true,
+      navBar: true
+    }
+  },
+  {
+    path: '/about',
+    name: '关于',
+    component: _import_('My/Address'),
+    meta: {
       navBar: true
     }
   }
