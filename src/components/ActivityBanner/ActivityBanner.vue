@@ -12,7 +12,7 @@
     </van-swipe>
     <van-swipe :autoplay="3000" class="home-advertis" show-indicators indicator-color="#00a6ff">
       <van-swipe-item class="item-list" :key="index" v-for="(item,index) in advertisList">
-        <img :src="getAdvertisBanner(item.image_hash)" alt="">
+        <img style="width: 100%" :src="getAdvertisBanner(item.image_hash)" alt="">
       </van-swipe-item>
     </van-swipe>
   </div>

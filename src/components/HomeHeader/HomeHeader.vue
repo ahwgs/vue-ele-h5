@@ -22,7 +22,7 @@
 
 <style scoped lang="less">
   .header {
-    padding: 14px 14px 0 14px;
+    padding: 10px 14px 0 14px;
     background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#0085ff));
     background-image: -webkit-linear-gradient(left, #0af, #0085ff);
     background-image: linear-gradient(90deg, #0af, #0085ff);

@@ -10,11 +10,10 @@ import './assets/font/iconfont.css'
 import axios from './utils/http'
 
 
-Vue.prototype.$http = axios
+Vue.prototype.$http = axios // 将请求绑定至vue实例上
 
 
 import FastClick from 'fastclick'
-
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
