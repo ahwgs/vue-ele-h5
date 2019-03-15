@@ -32,9 +32,7 @@
     </div>
 
     <div v-if="isLogin" class="home-list">
-      <div class="home-list-warp">
-        123
-      </div>
+      <home-list :list="storeList"></home-list>
 
     </div>
 
@@ -48,12 +46,13 @@
 </template>
 
 <script>
-  import HomeHeader from '../../components/HomeHeader/HomeHeader'
-  import HomeBanner from '../../components/HomeBanner/HomeBanner'
-  import ActivityBanner from '../../components/ActivityBanner/ActivityBanner'
+  import HomeHeader from '@components/HomeHeader/HomeHeader'
+  import HomeBanner from '@components/HomeBanner/HomeBanner'
+  import ActivityBanner from '@components/ActivityBanner/ActivityBanner'
+  import HomeList from '@components/HomeList/HomeList'
   import {Icon} from 'vant'
   import {mapState} from 'vuex'
-  import ImageData from '../../utils/images'
+  import ImageData from '@utils/images'
 
   export default {
     name: 'Home',
@@ -61,46 +60,40 @@
       "van-icon": Icon,
       "home-header": HomeHeader,
       "home-banner": HomeBanner,
-      "activity-banner": ActivityBanner
+      "activity-banner": ActivityBanner,
+      "home-list": HomeList
     },
     data() {
       return {
         noData: ImageData.noData,
-        bannerList: [
-          {name: '美食', image_hash: "/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg"},
-          {name: '夜宵', image_hash: "/9/21/60ac33f023d9074e13cd78f9b5964jpeg.jpeg"},
-          {name: '商超便利', image_hash: "/c/7e/76a23eb90dada42528bc41499d6f8jpeg.jpeg"},
-          {name: '水果', image_hash: "/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg"},
-          {name: '医药健康', image_hash: "/7/0a/af108e256ebc9f02db599592ae655jpeg.jpeg"},
-          {name: '浪漫鲜花', image_hash: "/3/01/c888acb2c8ba9e0c813f36ec9e90ajpeg.jpeg"},
-          {name: '汉堡披萨', image_hash: "/b/7f/432619fb21a40b05cd25d11eca02djpeg.jpeg"},
-          {name: '厨房生鲜', image_hash: "/c/21/e42997b86b232161a5a16ab813ae8jpeg.jpeg"},
-          {name: '炸鸡烤串', image_hash: "/a/78/0fb469b2da210827ec16896e00420jpeg.jpeg"},
-          {name: '地方菜系', image_hash: "/a/8a/ec21096d528b7cfd23cdd894f01c6jpeg.jpeg"},
-          {name: '麻辣烫', image_hash: "/e/c7/b7ba9547aa700bd20d0420e1794a8jpeg.jpeg"},
-          {name: '速食简餐', image_hash: "/0/1a/314b6da88ab6c7ae9828f91652d40jpeg.jpeg"},
-          {name: '地方小吃', image_hash: "/7/d6/6f2631288a44ec177204e05cbcb93jpeg.jpeg"},
-          {name: '大牌惠吃', image_hash: "/a/7b/b02bd836411c016935d258b300cfejpeg.jpeg"},
-          {name: '米粉面馆', image_hash: "/e/89/185f7259ebda19e16123884a60ef2jpeg.jpeg"},
-          {name: '包子粥店', image_hash: "/5/1a/dc885d2ce022d2ee60495acafb795jpeg.jpeg"},
-        ],
         activityList: [
-          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: '/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'},
-          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: '/e/ee/df43e7e53f6e1346c3fda0609f1d3png.png'},
+          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: 'eeedf43e7e53f6e1346c3fda0609f1d3png'},
+          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: 'eeedf43e7e53f6e1346c3fda0609f1d3png'},
         ],
         advertisList: [
-          {image_hash: '/4/48/37fce9a4ffbec79293357f68ecfcbjpeg.jpeg', name: ''},
-          {image_hash: '/2/f6/36e52bca0d6db458e9855b7fc5813jpeg.jpeg', name: ''},
-          {image_hash: '/1/9c/d8da44b63fa1208476992df88edc9jpeg.jpeg', name: ''},
+          {image_hash: '44837fce9a4ffbec79293357f68ecfcbjpeg', name: ''},
+          {image_hash: '2f636e52bca0d6db458e9855b7fc5813jpeg', name: ''},
+          {image_hash: '19cd8da44b63fa1208476992df88edc9jpeg', name: ''},
         ]
       }
     },
     created() {
-
+      //店铺列表
+      this.$store.dispatch({
+        type: 'home/getStoreList',
+        payload: {}
+      })
+      //店铺列表
+      this.$store.dispatch({
+        type: 'home/getHomeClassifyList',
+        payload: {}
+      })
     },
     computed: {
       ...mapState({
-        isLogin: state => state.user.isLogin
+        isLogin: state => state.user.isLogin,
+        storeList: state => state.home.storeList,
+        bannerList: state => state.home.classifyList
       })
     },
     methods: {}
@@ -168,9 +161,7 @@
     .home-list {
       height: 100%;
       background-color: #fff;
-      .home-list-warp {
-        background-color: #fff;
-      }
+
     }
     .noData {
       display: flex;

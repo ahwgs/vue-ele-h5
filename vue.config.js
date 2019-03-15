@@ -1,6 +1,9 @@
-
 const path = require('path')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
+
+const resolve = (dir) => {
+  return path.join(__dirname, dir);
+}
 
 module.exports = {
   lintOnSave: false,
@@ -33,16 +36,23 @@ module.exports = {
 
     }
   },
-  configureWebpack: (config)=>{
+  configureWebpack: (config) => {
     // vue骨架屏插件配置
     config.plugins.push(new SkeletonWebpackPlugin({
       webpackConfig: {
         entry: {
-          app: path.join(__dirname, './src/utils/skeleton.js'),
+          app: resolve('./src/utils/skeleton.js'),
         },
       },
       minimize: true,
       quiet: true,
     }))
   },
+  chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('@assets', resolve('src/assets'))
+      .set('@components', resolve('src/components'))
+      .set('@utils', resolve('src/utils'))
+  }
 }

@@ -1,3 +1,3 @@
 
 
-export const ELE_IMG_URL = 'https://fuss10.elemecdn.com'
+export const ELE_IMG_URL = 'https://fuss10.elemecdn.com/'

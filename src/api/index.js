@@ -1,7 +1,8 @@
 import find from './find/index'
+import home from './home/index'
 
 const api = {
-  find
+  find,home
 }
 
 export default api
