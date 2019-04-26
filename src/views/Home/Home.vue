@@ -1,8 +1,6 @@
 <template>
   <div class="home-page">
-
-    <home-header></home-header>
-
+    <home-header/>
     <div class="searchBtn">
       <router-link to="/search" class="content">
         <van-icon name="search"/>
@@ -27,12 +25,20 @@
     </div>
 
     <!-- 筛选 -->
-    <div>
-
+    <div class="home-filter">
+      <home-filter
+        :filterData="filterData"
+        @onGetList="handleGetListWithFilter"
+      />
     </div>
 
     <div v-if="isLogin" class="home-list">
-      <home-list :list="storeList"></home-list>
+      <home-list
+        :list="storeList"
+        :laodding="listLoading"
+        :listFinished="listFinished"
+        @onload="getStoreList"
+      />
 
     </div>
 
@@ -50,9 +56,11 @@
   import HomeBanner from '@components/HomeBanner/HomeBanner'
   import ActivityBanner from '@components/ActivityBanner/ActivityBanner'
   import HomeList from '@components/HomeList/HomeList'
+  import HomeFilter from '@components/HomeFilter/HomeFilter'
   import {Icon} from 'vant'
   import {mapState} from 'vuex'
   import ImageData from '@utils/images'
+  import MyLocation from "../../utils/location";
 
   export default {
     name: 'Home',
@@ -61,42 +69,93 @@
       "home-header": HomeHeader,
       "home-banner": HomeBanner,
       "activity-banner": ActivityBanner,
-      "home-list": HomeList
+      "home-list": HomeList,
+      "home-filter": HomeFilter
     },
     data() {
       return {
         noData: ImageData.noData,
-        activityList: [
-          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: 'eeedf43e7e53f6e1346c3fda0609f1d3png'},
-          {name: '品质套餐', desc: '搭配齐全吃的好', image_hash: 'eeedf43e7e53f6e1346c3fda0609f1d3png'},
-        ],
-        advertisList: [
-          {image_hash: '44837fce9a4ffbec79293357f68ecfcbjpeg', name: ''},
-          {image_hash: '2f636e52bca0d6db458e9855b7fc5813jpeg', name: ''},
-          {image_hash: '19cd8da44b63fa1208476992df88edc9jpeg', name: ''},
-        ]
+        offset: 0,
+        limit: 8,
+        listLoading: false,
+        listFinished: false,
       }
     },
     created() {
       //店铺列表
-      this.$store.dispatch({
-        type: 'home/getStoreList',
-        payload: {}
-      })
-      //店铺列表
+      this.getStoreList()
+      //banner分类
       this.$store.dispatch({
         type: 'home/getHomeClassifyList',
         payload: {}
       })
+      //店铺列表
+      this.$store.dispatch({
+        type: 'home/getActivityList',
+        payload: {}
+      })
+      this.$store.dispatch({
+        type: 'home/getFilter',
+        payload: {}
+      })
+      this.getLocation()
     },
     computed: {
       ...mapState({
+        loading: state => state.app.loading,
         isLogin: state => state.user.isLogin,
         storeList: state => state.home.storeList,
-        bannerList: state => state.home.classifyList
+        bannerList: state => state.home.classifyList,
+        activityList: state => state.home.activityList,
+        advertisList: state => state.home.advertisList,
+        filterData: state => state.home.filterData,
       })
     },
-    methods: {}
+    methods: {
+      handleGetListWithFilter(params) {
+        let resultList = []
+        params && params.length > 0 && params.map((item, index) => {
+          resultList.push({
+            key: item.key,
+            value: item.value
+          })
+        })
+        this.getStoreList(resultList)
+      },
+      getLocation: function () {
+        // const pos = new MyLocation()
+        // pos.getLocal()
+        // console.log('坐标', pos)
+      },
+      getStoreList: function (params) {
+        this.listLoading = true
+        this.listFinished = false
+        // this.list = this.storeList
+        let offect = this.offset
+        offect += 8
+        let payload = {
+          offset: offect,
+          limit: this.limit,
+        }
+        if (params) {
+          params.map((param) => {
+            payload[param.key] = param.value
+          })
+        }
+        this.$store.dispatch({
+          type: 'home/getStoreList',
+          payload,
+        }).then(() => {
+          this.listLoading = false
+          this.offset = offect
+          // if(this.list.length === this.storeList.length){
+          //   this.listFinished = true
+          // }else{
+          //   this.list = this.storeList
+          // }
+        })
+      }
+    }
   }
 </script>
 
@@ -109,6 +168,9 @@
     .searchBtn {
       padding: 10px 14px;
       background-image: linear-gradient(90deg, #0af, #0085ff);
+      position: sticky;
+      z-index: 999;
+      top: 0;
       .content {
         width: 100%;
         height: 40px;
@@ -131,6 +193,12 @@
     }
     .home-advertising {
       width: 100%;
+      padding: 0 10px;
+    }
+    .home-filter {
+      position: sticky;
+      z-index: 100;
+      top: 60px;
       padding: 0 10px;
     }
     .home-recommended {

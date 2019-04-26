@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '../store/index'
 // 请求成功返回状态，字段和后台统一
 // export const baseUrl = process.env.BASE_URL   // 引入全局url，定义在全局变量process.env中，开发环境为了方便转发，值为空字符串
 // 环境的切换
@@ -9,6 +10,7 @@ axios.defaults.timeout = 5000
 // 封装请求拦截
 axios.interceptors.request.use(
   config => {
+    store.commit('app/changeLoading',true)
     config.headers['Content-Type'] = 'application/json;charset=UTF-8';
     return config
   },
@@ -20,6 +22,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     let {data} = response
+    store.commit('app/changeLoading',false)
     if (data.responseCode === 202) {    // 如果后台返回的错误标识为token过期，则重新登录
     } else {
       return Promise.resolve(data)

@@ -25,12 +25,13 @@ module.exports = {
     open: true,
     hotOnly: true,
     proxy: {
-      '/buju-market': {
-        target: 'http://192.168.1.6:8380',
+      '/eleapi': {
+        target: ' https://easy-mock.com/mock/5c83adf76ed1b709ab872a75/',
         changeOrigin: true,
         secure: false,
+        ws: false,
         pathRewrite: { // 重写路径
-          '^/': ''
+          '^/eleapi': '/'
         }
       },
 

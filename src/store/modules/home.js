@@ -1,8 +1,11 @@
 import api from "../../api";
 
 const state = {
-  storeList: [],
-  classifyList:[]
+  storeList: [], //首页店铺列表
+  classifyList: [], //首页banner分类接口
+  activityList:[],
+  advertisList:[],
+  filterData:{}
 }
 //进行异步操作
 const actions = {
@@ -19,15 +22,52 @@ const actions = {
     if (response && response.status === 0) {
       commit('doSaveClassifyList', response.data)
     }
+  },
+  async getActivityList({commit, state}, {payload}){
+    const response = await api.home.getActivityList(payload);
+    console.log(response);
+    if (response && response.status === 0) {
+      commit('doSaveActivityList', response.data)
+    }
+  },
+  async getFilter({commit, state}, {payload}){
+    const response = await api.home.getFilter(payload);
+    console.log(response);
+    if (response && response.status === 0) {
+      commit('doSaveFilterList', response.data)
+    }
   }
 }
 //进行同步操作
 const mutations = {
   doSaveStoreList(state, payload) {
-    state.storeList = payload.items
+    let oldList = state.storeList
+    state.storeList = oldList.concat(payload.items)
   },
   doSaveClassifyList(state, payload) {
     state.classifyList = payload
+  },
+  doSaveActivityList(state, payload){
+    state.activityList = payload.activityList
+    state.advertisList = payload.advertisList
+  },
+  doSaveFilterList(state, payload){
+    console.log('排序data',payload)
+    state.filterData = payload
+  },
+  doLikeItem(state, payload) {
+    let storeList = state.storeList
+    let findIndex = -1
+    let findItem = {}
+    storeList && storeList.length > 0 && storeList.forEach((store, index) => {
+      if (store.restaurant.id === payload) {
+        findIndex = index
+        findItem = store
+      }
+    })
+    storeList.splice(findIndex,1)
+    storeList.push(findItem)
+    state.storeList = storeList
   }
 }
 const getters = {}

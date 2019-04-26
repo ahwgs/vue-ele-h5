@@ -4,6 +4,7 @@ import app from './modules/app'
 import user from './modules/user'
 import find from './modules/find'
 import home from './modules/home'
+import search from './modules/search'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     app,
     user,
     find,
-    home
+    home,
+    search
   }
 })

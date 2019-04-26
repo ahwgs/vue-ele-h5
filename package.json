@@ -14,6 +14,7 @@
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "postcss-px2rem": "^0.3.0",
+    "qs": "^6.7.0",
     "register-service-worker": "^1.5.2",
     "vant": "^1.6.6",
     "vue": "^2.6.6",

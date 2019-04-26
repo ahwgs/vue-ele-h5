@@ -42,10 +42,23 @@
       <section class="tag-list">
         <span class="tag-warp" v-for="(tag,index) in item.support_tags"><span class="tag">{{tag.text}}</span></span>
       </section>
+      <section class="activity-list">
+        <div class="list">
+          <div :key="ind" class="list-item" v-for="(act,ind) in list" :class='[ind>1 && !openMore?hidden:show]'>
+            <span class="flag" :style="{backgroundColor:act.backgroundColor}">{{act.iconName}}</span>
+            <span class="text">{{act.text}}</span>
+          </div>
+        </div>
+        <div class="btn" @click="changeReadMore">
+          <span>{{list.length}}个活动</span>
+          <van-icon class="icon-btn" v-if="!openMore" name="arrow-down"/>
+          <van-icon class="icon-btn" v-if="openMore" name="arrow-up"/>
+        </div>
+      </section>
     </div>
     <div v-if="showMask" @click="changeShowMask" class="item-mask">
       <div class="mask-circle">
-        <span @click="doLikeItem">不喜欢</span>
+        <span :data-id="item.id" @click="doLikeItem">不喜欢</span>
       </div>
     </div>
   </section>
@@ -53,13 +66,14 @@
 
 <script>
   import {formatImgWithEle} from '@utils/utils'
-  import {ELE_IMG_URL} from "@utils/config";
   import MyRate from '@components/common/MyRate'
+  import {Icon} from 'vant';
 
   export default {
     name: "HomeListItem",
     components: {
-      "my-rate": MyRate
+      "my-rate": MyRate,
+      "van-icon": Icon
     },
     props: {
       item: {
@@ -69,18 +83,28 @@
     data() {
       return {
         showMask: false,
+        openMore: false,
+        hidden: 'hidden',
+        show: 'show'
+      }
+    },
+    computed: {
+      list: function () {
+        return this.getActList(this.item)
       }
     },
     methods: {
       getLogo: function (path, item) {
-        console.log('我是每一条的数据', item)
-        return ELE_IMG_URL + formatImgWithEle(path) + ''
+        return formatImgWithEle(path) + ''
       },
       changeShowMask: function () {
         this.showMask = !this.showMask
       },
-      doLikeItem: function () {
-        this.$toast('您点击了不喜欢');
+      doLikeItem: function (event) {
+        //获取到点击的id
+        const id = event.target.dataset.id
+        this.$store.commit('home/doLikeItem',id)
+        this.$toast('您点击了不喜欢,已将其移动至最底部');
       },
       getDistance: function (distance) {
         if (distance < 100) {
@@ -92,12 +116,28 @@
           return (distance / 1000).toFixed(2) + 'km'
         }
       },
-      getTagStyle: function (tag) {
-        let result = {
-          color: '#' + tag.color,
-          borderColor: '#' + tag.border,
-        }
-        return JSON.stringify(result)
+      changeReadMore: function () {
+        this.openMore = !this.openMore
+      },
+      getActList: function (item) {
+        let list = []
+        if (!item) return []
+        item.activities && item.activities.length > 0 && item.activities.forEach(act => {
+          list.push({
+            backgroundColor: '#' + act.icon_color,
+            text: act.description,
+            iconName: act.icon_name,
+          })
+        })
+
+        item.supports && item.supports.length > 0 && item.supports.forEach(act => {
+          list.push({
+            backgroundColor: '#' + act.icon_color,
+            text: act.description,
+            iconName: act.icon_name,
+          })
+        })
+        return list
       }
     }
   }
@@ -115,6 +155,7 @@
     flex-direction: column;
     padding: 20px 0;
     position: relative;
+    border-bottom: 1px solid #eee;
   }
 
   .item-header {
@@ -184,6 +225,7 @@
           }
         }
       }
+
     }
   }
 
@@ -193,7 +235,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      margin: 10px 15px 0 0 ;
+      margin: 10px 15px 0 0;
       .tag-warp {
         position: relative;
         white-space: nowrap;
@@ -206,6 +248,57 @@
           transform: scale(.8);
           border: 1px solid #ddd;
         }
+      }
+    }
+    .activity-list {
+      margin-top: 15px;
+      margin-right: 15px;
+      display: flex;
+      justify-content: space-between;
+      .list {
+        display: flex;
+        flex: 1;
+        margin-right: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis; //溢出用省略号显示
+        white-space: nowrap; //溢出不换行
+        align-items: flex-start;
+        flex-direction: column;
+        .list-item {
+          overflow: hidden;
+          text-overflow: ellipsis; //溢出用省略号显示
+          white-space: nowrap; //溢出不换行
+          line-height: 15px;
+          margin: 2px 0;
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+        .hidden {
+          display: none;
+        }
+        .flag {
+          margin-right: 4px;
+          width: 16px;
+          height: 14px;
+          border-radius: 4px;
+          color: #fff;
+          display: inline-block;
+          font-size: 12px;
+        }
+        .text {
+          display: inline-block;
+        }
+      }
+      .btn {
+        display: flex;
+        color: #999;
+        text-align: right;
+        line-height: 1;
+      }
+      .icon-btn {
+        margin-left: 5px;
+        vertical-align: -2px;
       }
     }
   }

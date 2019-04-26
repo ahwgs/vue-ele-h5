@@ -11,7 +11,6 @@
 
 <script>
   import {Swipe, SwipeItem} from 'vant';
-  import {ELE_IMG_URL} from "@utils/config";
   import {formatImgWithEle} from '@utils/utils'
 
   export default {
@@ -38,7 +37,7 @@
     },
     methods: {
       getEleIcon: function (url) {
-        return ELE_IMG_URL + formatImgWithEle(url) + '?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/'
+        return formatImgWithEle(url) + '?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/'
       }
     }
   }

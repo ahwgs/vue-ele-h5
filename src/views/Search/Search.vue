@@ -14,9 +14,9 @@
         <div slot="action" @click="onSearch">搜索</div>
       </van-search>
     </div>
-    <section v-if="showHistory">
+    <section v-if="historyList && historyList.length>0">
       <header class="label">历史搜索
-        <van-icon @click="hideHistory" name="failure"/>
+        <van-icon @click="hideHistory" name="cross"/>
       </header>
       <section class="value">
         <div @click="onHotSearch(item)" class="item" v-for="(item,index) in historyList" :key="index">{{item}}</div>
@@ -25,7 +25,8 @@
     <section style="margin-top: 15px">
       <header class="label">热门搜索</header>
       <section class="value">
-        <div @click="onHotSearch(item)" class="item" v-for="(item,index) in hotSearchList" :key="index">{{item}}</div>
+        <div @click="onHotSearch(item)" class="item" v-for="(item,index) in hotSearchList" :key="index">{{item}}
+        </div>
       </section>
     </section>
   </div>
@@ -33,6 +34,7 @@
 
 <script>
   import {Icon, Search} from 'vant'
+  import {mapState} from 'vuex'
 
   export default {
     name: "Search",
@@ -43,24 +45,66 @@
     data() {
       return {
         searchWord: '',
-        hotSearchList: ['好吃的', '不好吃的'],
-        historyList: ['1111', '2222', '3333'],
         showHistory: true
       }
     },
+    created() {
+      this.$store.dispatch({
+        type: 'search/getHotWordList',
+        payload: {}
+      })
+    },
+    computed: {
+      ...mapState({
+        historyList: state => state.search.historyList,
+        hotSearchList: state => state.search.hotSearchList,
+        searchList:state => state.search.searchList,
+      })
+    },
     methods: {
       onSearch: function () {
+        try {
+          const searchWord = this.searchWord
+          if (searchWord.trim() === '') {
+            this.$toast('请输入搜索内容')
+            return
+          }
+          this.setHistory([searchWord])
+          console.log('搜索词', this.searchWord);
+          this.getSearch(searchWord)
+        }catch (e) {
+          console.log(e)
+        }
 
       },
       hideHistory: function () {
-        this.showHistory = false
+        const list = []
+        this.setHistory(list)
       },
       onHotSearch: function (item) {
         this.searchWord = item;
+        this.setHistory([item])
         this.getSearch(item)
       },
       getSearch: function (key) {
+        try {
+          this.$store.dispatch({
+            type:'search/getSearchList',
+            payload:{
+              keyword:key
+            }
+          }).then(()=>{
+            this.$router.push(`/search/result?keyword=${key}`)
+          })
+        }catch (e) {
 
+        }
+      },
+      setHistory: function (list) {
+        this.$store.commit({
+          type: 'search/changeHistoryList',
+          payload: list
+        })
       }
     }
   }

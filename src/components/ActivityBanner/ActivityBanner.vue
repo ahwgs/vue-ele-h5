@@ -20,7 +20,6 @@
 
 <script>
   import {Swipe, SwipeItem} from 'vant';
-  import {ELE_IMG_URL} from "@utils/config";
   import {formatImgWithEle} from '@utils/utils'
 
   export default {
@@ -41,10 +40,10 @@
     },
     methods: {
       getActivityBanner: function (imgUrl) {
-        return ELE_IMG_URL + formatImgWithEle(imgUrl) + '?imageMogr/format/webp/thumbnail/!282x188r/gravity/Center/crop/282x188/'
+        return formatImgWithEle(imgUrl) + '?imageMogr/format/webp/thumbnail/!282x188r/gravity/Center/crop/282x188/'
       },
       getAdvertisBanner: function (imgUrl) {
-        return ELE_IMG_URL + formatImgWithEle(imgUrl) + '?imageMogr/format/webp/thumbnail/568x/'
+        return formatImgWithEle(imgUrl) + '?imageMogr/format/webp/thumbnail/568x/'
       }
     }
   }

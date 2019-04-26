@@ -54,6 +54,14 @@ export const routes = [
     component: _import_('Search/Search'),
   },
   {
+    path: '/search/result',
+    name: '搜索',
+    meta: {
+      hideNavBar: true
+    },
+    component: _import_('SearchResult/SearchResult'),
+  },
+  {
     path: '/my/address',
     name: '我的地址',
     component: _import_('My/Address'),

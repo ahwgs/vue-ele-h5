@@ -7,10 +7,10 @@ import './registerServiceWorker'
 import 'lib-flexible'
 import './assets/font/iconfont.css'
 
-import axios from './utils/http'
+
 import { Toast } from 'vant';
 
-Vue.prototype.$http = axios // 将请求绑定至vue实例上
+
 
 
 import FastClick from 'fastclick'
