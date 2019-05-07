@@ -3,36 +3,36 @@ import api from "../../api";
 const state = {
   storeList: [], //首页店铺列表
   classifyList: [], //首页banner分类接口
-  activityList:[],
-  advertisList:[],
-  filterData:{}
+  activityList: [],
+  advertisList: [],
+  filterData: {
+    inside_sort_filter: [],
+    outside_filters: [],
+    outside_sort_filter: []
+  }
 }
 //进行异步操作
 const actions = {
   async getStoreList({commit, state}, {payload}) {
     const response = await api.home.getStoreList(payload);
-    console.log(response);
     if (response && response.status === 0) {
       commit('doSaveStoreList', response.data)
     }
   },
   async getHomeClassifyList({commit, state}, {payload}) {
     const response = await api.home.getHomeClassifyList(payload);
-    console.log(response);
     if (response && response.status === 0) {
       commit('doSaveClassifyList', response.data)
     }
   },
-  async getActivityList({commit, state}, {payload}){
+  async getActivityList({commit, state}, {payload}) {
     const response = await api.home.getActivityList(payload);
-    console.log(response);
     if (response && response.status === 0) {
       commit('doSaveActivityList', response.data)
     }
   },
-  async getFilter({commit, state}, {payload}){
+  async getFilter({commit, state}, {payload}) {
     const response = await api.home.getFilter(payload);
-    console.log(response);
     if (response && response.status === 0) {
       commit('doSaveFilterList', response.data)
     }
@@ -47,12 +47,11 @@ const mutations = {
   doSaveClassifyList(state, payload) {
     state.classifyList = payload
   },
-  doSaveActivityList(state, payload){
+  doSaveActivityList(state, payload) {
     state.activityList = payload.activityList
     state.advertisList = payload.advertisList
   },
-  doSaveFilterList(state, payload){
-    console.log('排序data',payload)
+  doSaveFilterList(state, payload) {
     state.filterData = payload
   },
   doLikeItem(state, payload) {
@@ -65,7 +64,7 @@ const mutations = {
         findItem = store
       }
     })
-    storeList.splice(findIndex,1)
+    storeList.splice(findIndex, 1)
     storeList.push(findItem)
     state.storeList = storeList
   }

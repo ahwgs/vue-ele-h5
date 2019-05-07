@@ -18,7 +18,7 @@ export const getActivityList = async ()=>{
 }
 
 export const getFilter = async ()=>{
-  return await axios.get('/eleapi//home/getFilter')
+  return await axios.get('/eleapi/home/getFilter')
 }
 
 export default {

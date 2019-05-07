@@ -71,12 +71,13 @@
     methods: {
       handleLeftFilterList() {
         //左侧下拉
-        window.scrollTo(0,1000)
+        window.scrollTo(0, 1000)
         this.showFilterContent = true
       },
       hasActiveItem(target) {
         //判断这个item 在不在已经激活的里面
         let list = this.activeList
+        console.log('hasActiveItem', target)
         if (!list || list.length < 1) return false
         let resultIndex = -1
         list.map((item, index) => {
